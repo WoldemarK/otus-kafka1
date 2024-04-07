@@ -17,7 +17,7 @@ public class Ex4Consumer {
 
         Utils.log.warn("Subscribe to {} with {}", topics, groupId);
 
-        var consumer = new KafkaConsumer<String, String>(Utils.createConsumerConfig(m ->
+        KafkaConsumer<String, String> consumer = new KafkaConsumer<>(Utils.createConsumerConfig(m ->
                 m.put(ConsumerConfig.GROUP_ID_CONFIG, groupId)));
 
         consumer.subscribe(topics);

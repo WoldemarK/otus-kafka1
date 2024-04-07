@@ -7,14 +7,15 @@ import org.apache.kafka.common.serialization.IntegerSerializer;
 
 public class Ex3Producer {
     public static void main(String[] args) {
-        var producer = new KafkaProducer<Integer, String>(Utils.createProducerConfig(m ->
+        KafkaProducer<Integer, String> producer = new KafkaProducer<>(
+                Utils.createProducerConfig(m ->
                 m.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, IntegerSerializer.class)
         ));
 
         for (int i = 0; i < 200; i++) {
             Utils.log.info("Send {}", i);
 
-            var record = new ProducerRecord<>("topic1", i, Integer.toString(i));
+            ProducerRecord<Integer, String> record = new ProducerRecord<>("topic1", i, Integer.toString(i));
             producer.send(record,
                     (metadata, error) -> Utils.log.info("Complete {}", record.key()));
 
